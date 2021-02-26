@@ -1,0 +1,14 @@
+# docker/php-fpm/dockerfile
+
+FROM php:fpm-alpine
+RUN apk --update --no-cache add git
+
+RUN apk update && \
+    apk add openssh && \
+    apk add postgresql-dev && \
+    docker-php-ext-install pdo pdo_pgsql pgsql
+
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+WORKDIR /var/www
+CMD composer install ; php-fpm
+EXPOSE 9000
