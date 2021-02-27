@@ -2,7 +2,6 @@
 version: '3'
 
 services:
-
   php-fpm:
     build:
       context: ./docker/php-fpm
@@ -25,4 +24,12 @@ services:
     depends_on:
       - php-fpm
     ports:
-      - "80:80"
+      - '80:80'
+
+  database:
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_USER: main
+      POSTGRES_PASSWORD: main
+      POSTGRES_DB: main
+    ports: [5433]
